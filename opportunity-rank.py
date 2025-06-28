@@ -53,18 +53,28 @@ if st.button("📊 Estimate My Rank"):
 
     st.success("This reflects your starting point in life—the opportunities you were given, not what you’ve done with them.")
 
+    # Visual representation of global line with pointer
+    st.subheader("📽️ Visualizing Your Place in the Line")
+    fig, ax = plt.subplots(figsize=(10, 1))
+    ax.plot([0, 8_200_000_000], [0, 0], color='lightgray', linewidth=15)
+    ax.scatter(estimated_rank, 0, color='red', s=100, zorder=5)
+    ax.text(estimated_rank, 0.05, f"You\n#{estimated_rank:,}", ha='center', va='bottom', fontsize=10)
+    ax.set_xlim(0, 8_200_000_000)
+    ax.axis('off')
+    st.pyplot(fig)
+
     # Optional bar chart of component scores
     st.subheader("📊 Breakdown of Your Inputs")
     data = pd.DataFrame({
         'Category': ['HDI (Country)', 'Education', 'Healthcare', 'Water', 'Sanitation', 'Safety', 'Freedom'],
         'Score': [hdi * 10, edu, health, water, sewage, safety, freedom]
     })
-    fig, ax = plt.subplots()
-    ax.bar(data['Category'], data['Score'], color='skyblue')
-    ax.set_ylim(0, 10)
-    ax.set_ylabel('Access Level (0-10)')
-    ax.set_title('Your Early-Life Opportunity Profile')
-    st.pyplot(fig)
+    fig2, ax2 = plt.subplots()
+    ax2.bar(data['Category'], data['Score'], color='skyblue')
+    ax2.set_ylim(0, 10)
+    ax2.set_ylabel('Access Level (0-10)')
+    ax2.set_title('Your Early-Life Opportunity Profile')
+    st.pyplot(fig2)
 
     st.markdown("""
 ---
